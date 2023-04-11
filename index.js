@@ -120,29 +120,30 @@ class LinkedList {
     this.length = 0;
   }
   push(val) {
-    let newNode = new Node(val);
-    if (!this.head) {
-      this.head = newNode;
-      this.tail = newNode;
-    } else this.tail.next = newNode;
-    this.tail = newNode;
+    let node = new Node(val);
+    let current = this.head;
+    if (!current) {
+      this.head = node;
+    } else {
+      while (current.next) {
+        current = current.next;
+      }
+      current.next = node;
+    }
     this.length++;
-    return newNode.value;
+    this.tail = current;
   }
   #find(index) {
-    if (index >= this.length || index < 0) {
-      return null;
-    }
+    if (index < 0 || index > this.length - 1) return undefined;
     let current = this.head;
     let i = 0;
-    while (i < index) {
+    while (i++ < index) {
       current = current.next;
-      i++;
     }
     return current;
   }
   get(index) {
-    return this.#find(index);
+    return this.#find(index)?.value || undefined;
   }
   #findValue(value) {
     let current = this.head;
@@ -168,22 +169,7 @@ class LinkedList {
     console.log(listString);
   }
   pop() {
-    if (!this.head) {
-      return null;
-    }
-    let current = this.head;
-    let i = 0;
-    while (i < this.length - 2) {
-      current = current.next;
-      i++;
-    }
-    current.next = null;
-    this.tail = current;
-    this.length--;
-    if (this.length <= 0) {
-      this.head = null;
-      this.tail = null;
-    }
+    return this.delete(this.length - 1).value;
   }
   deleteValue(value) {
     if (!this.#findValue(value)) {
@@ -213,53 +199,47 @@ class LinkedList {
     this.length--;
   }
   delete(index) {
+    let nodeDeleted;
     if (!this.head) {
-      return null;
+      return undefined;
+    } else if (this.length === 1) {
+      nodeDeleted = this.head;
+      this.head = null;
+      this.tail = null;
+      return nodeDeleted;
     }
     let current = this.head;
     let i = 0;
-    if (index == 0) {
-      this.head = current.next;
-      if (!this.head) this.tail = null;
-      this.length--;
-
-      return;
-    }
-    while (i < index - 1) {
+    while (i++ < index - 1) {
       current = current.next;
-      i++;
     }
-    if (!current.next.next) {
-      this.tail = current;
-    }
-    let nodeDeleted = current.next;
-    current.next = current.next.next;
-    if (this.length <= 0) {
-      this.head = null;
-      this.tail = null;
-    }
+    nodeDeleted = current.next;
+    current.next = current.next?.next ? current.next.next : null;
+    if (!current.next) this.tail = current;
     this.length--;
     return nodeDeleted;
   }
 }
 
-// let ll = new LinkedList();
-// ll.push(1);
-// ll.push(2);
-// ll.push(3);
-// ll.push(4);
+let ll = new LinkedList();
+ll.push(1);
+ll.push(2);
+ll.push(3);
+ll.push(4);
 
-// ll.printLinkedList();
+ll.printLinkedList();
 
-// console.log(ll.getValue(2));
-// ll.pop();
-// ll.printLinkedList();
-// ll.pop();
-// ll.printLinkedList();
-// ll.pop();
-// ll.printLinkedList();
-// ll.pop();
-// ll.printLinkedList();
+// console.log(ll.get(7));
+ll.pop();
+ll.printLinkedList();
+console.log('Head', ll.head);
+console.log('Tail', ll.tail);
+ll.pop();
+ll.printLinkedList();
+ll.pop();
+ll.printLinkedList();
+ll.pop();
+ll.printLinkedList();
 
 // ll.push(4);
 // ll.push(3);
@@ -271,5 +251,13 @@ class LinkedList {
 // ll.pop();
 // ll.delete(0);
 // ll.printLinkedList();
-// console.log('Head', ll.head);
-// console.log('Tail', ll.tail);
+
+// BST
+
+class TreeNode {
+  constructor(val) {
+    this.value = value;
+    this.left = left;
+    this.right = right;
+  }
+}
