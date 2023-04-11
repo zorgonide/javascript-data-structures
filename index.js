@@ -260,3 +260,5 @@ ll.delete(0);
 ll.printLinkedList();
 console.log('Head', ll.head);
 console.log('Tail', ll.tail);
+
+console.log('Sounds like a skill issue');
