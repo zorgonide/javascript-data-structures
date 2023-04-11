@@ -1,4 +1,4 @@
-let nums = [10, 9, 8, 4, 2, 1, 3];
+let nums = [10, 9, 8, 4, 7, 2, 27, 1, 3];
 console.log('Before', nums);
 const bubbleSort = () => {
   for (let i = 0; i < nums.length; i++) {
@@ -73,7 +73,7 @@ const getLongest = (nums) => {
 
 function radixSort(array) {
   // code goes here
-  const longest = getLongest(array);
+  let longest = getLongest(array);
   let buckets = new Array(10).fill().map(() => []);
   for (let i = longest - 1; i >= 0; i--) {
     while (array.length) {
@@ -89,7 +89,20 @@ function radixSort(array) {
   return array;
 }
 
+const binarySearch = (nums, searchTerm) => {
+  let min = 0,
+    max = nums.length - 1;
+  while (min <= max) {
+    let middle = Math.floor((min + max) / 2);
+    if (searchTerm < nums[middle]) {
+      max = middle - 1;
+    } else if (searchTerm > nums[middle]) min = middle + 1;
+    else return nums[middle];
+  }
+  return undefined;
+};
 // console.log('After', radixSort(nums));
+console.log('After Search', binarySearch(radixSort(nums), 22));
 
 //Linked List
 
@@ -230,33 +243,33 @@ class LinkedList {
   }
 }
 
-let ll = new LinkedList();
-ll.push(1);
-ll.push(2);
-ll.push(3);
-ll.push(4);
+// let ll = new LinkedList();
+// ll.push(1);
+// ll.push(2);
+// ll.push(3);
+// ll.push(4);
 
-ll.printLinkedList();
+// ll.printLinkedList();
 
-console.log(ll.getValue(2));
-ll.pop();
-ll.printLinkedList();
-ll.pop();
-ll.printLinkedList();
-ll.pop();
-ll.printLinkedList();
-ll.pop();
-ll.printLinkedList();
+// console.log(ll.getValue(2));
+// ll.pop();
+// ll.printLinkedList();
+// ll.pop();
+// ll.printLinkedList();
+// ll.pop();
+// ll.printLinkedList();
+// ll.pop();
+// ll.printLinkedList();
 
-ll.push(4);
-ll.push(3);
-ll.push(2);
-ll.push(1);
-ll.printLinkedList();
+// ll.push(4);
+// ll.push(3);
+// ll.push(2);
+// ll.push(1);
+// ll.printLinkedList();
 // ll.pop();
 // ll.pop();
 // ll.pop();
-ll.delete(0);
-ll.printLinkedList();
-console.log('Head', ll.head);
-console.log('Tail', ll.tail);
+// ll.delete(0);
+// ll.printLinkedList();
+// console.log('Head', ll.head);
+// console.log('Tail', ll.tail);
