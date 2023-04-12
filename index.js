@@ -263,15 +263,24 @@ ll.pop();
 
 class TreeNode {
   constructor(val) {
-    this.value = value;
-    this.left = left;
-    this.right = right;
+    this.value = val;
+    this.left = null;
+    this.right = null;
   }
 }
 
 class BST {
   constructor() {
     this.root = null;
+  }
+  height(node = this.root) {
+    if (!node) {
+      return -1;
+    } else {
+      let leftHeight = this.height(node.left);
+      let rightHeight = this.height(node.right);
+      return Math.max(leftHeight, rightHeight) + 1;
+    }
   }
   add(val) {
     let node = new TreeNode(val);
@@ -280,7 +289,7 @@ class BST {
     } else {
       let current = this.root;
       while (1) {
-        if (val < current.val) {
+        if (val < current.value) {
           if (current.left) {
             current = current.left;
           } else {
@@ -303,3 +312,7 @@ class BST {
     return this.root;
   }
 }
+
+let tree = new BST();
+tree.add(5).add(3).add(7).add(1).add(9);
+console.log(tree.height()); // Output: 2
