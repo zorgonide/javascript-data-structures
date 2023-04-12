@@ -284,14 +284,14 @@ class BST {
           if (current.left) {
             current = current.left;
           } else {
-            current.left = val;
+            current.left = node;
             break;
           }
         } else {
           if (current.right) {
             current = current.right;
           } else {
-            current.right = val;
+            current.right = node;
             break;
           }
         }
