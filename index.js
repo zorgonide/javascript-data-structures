@@ -102,7 +102,7 @@ const binarySearch = (nums, searchTerm) => {
   return undefined;
 };
 // console.log('After', radixSort(nums));
-console.log('After Search', binarySearch(radixSort(nums), 22));
+// console.log('After Search', binarySearch(radixSort(nums), 20));
 
 //Linked List
 
@@ -146,13 +146,18 @@ class LinkedList {
     return this.#find(index)?.value || undefined;
   }
   #findValue(value) {
-    let current = this.head;
-    let i = 0;
-    while (current?.value !== value && i < this.length) {
-      current = current.next;
-      i++;
+    if (!this.head) return undefined;
+    else {
+      let current = this.head;
+      let i = 0;
+      while (current.value !== value && i++ < this.length - 1) {
+        console.log(i, this.length);
+        current = current.next;
+      }
+      if (current.value === value) {
+        return current;
+      } else return undefined;
     }
-    return current || null;
   }
   getValue(value) {
     return this.#findValue(value) || null;
@@ -160,7 +165,6 @@ class LinkedList {
   printLinkedList() {
     let current = this.head;
     let listString = '';
-
     while (current !== null) {
       listString += current.value + ' -> ';
       current = current.next;
@@ -169,7 +173,7 @@ class LinkedList {
     console.log(listString);
   }
   pop() {
-    return this.delete(this.length - 1).value;
+    return this.delete(this.length - 1)?.value || undefined;
   }
   deleteValue(value) {
     if (!this.#findValue(value)) {
@@ -201,11 +205,14 @@ class LinkedList {
   delete(index) {
     let nodeDeleted;
     if (!this.head) {
+      //e
       return undefined;
     } else if (this.length === 1) {
+      //e
       nodeDeleted = this.head;
       this.head = null;
       this.tail = null;
+      this.length = 0; //e
       return nodeDeleted;
     }
     let current = this.head;
@@ -214,9 +221,9 @@ class LinkedList {
       current = current.next;
     }
     nodeDeleted = current.next;
-    current.next = current.next?.next ? current.next.next : null;
-    if (!current.next) this.tail = current;
-    this.length--;
+    current.next = current.next?.next ? current.next.next : null; //e
+    if (!current.next) this.tail = current; //e
+    this.length--; //e
     return nodeDeleted;
   }
 }
@@ -224,12 +231,12 @@ class LinkedList {
 let ll = new LinkedList();
 ll.push(1);
 ll.push(2);
-ll.push(3);
-ll.push(4);
+// ll.push(3);
+// ll.push(4);
 
 ll.printLinkedList();
 
-// console.log(ll.get(7));
+console.log(ll.getValue(2));
 ll.pop();
 ll.printLinkedList();
 console.log('Head', ll.head);
@@ -237,9 +244,9 @@ console.log('Tail', ll.tail);
 ll.pop();
 ll.printLinkedList();
 ll.pop();
-ll.printLinkedList();
-ll.pop();
-ll.printLinkedList();
+// ll.printLinkedList();
+// ll.pop();
+// ll.printLinkedList();
 
 // ll.push(4);
 // ll.push(3);
@@ -259,5 +266,40 @@ class TreeNode {
     this.value = value;
     this.left = left;
     this.right = right;
+  }
+}
+
+class BST {
+  constructor() {
+    this.root = null;
+  }
+  add(val) {
+    let node = new TreeNode(val);
+    if (!this.root) {
+      this.root = node;
+    } else {
+      let current = this.root;
+      while (1) {
+        if (val < current.val) {
+          if (current.left) {
+            current = current.left;
+          } else {
+            current.left = val;
+            break;
+          }
+        } else {
+          if (current.right) {
+            current = current.right;
+          } else {
+            current.right = val;
+            break;
+          }
+        }
+      }
+    }
+    return this;
+  }
+  toObject() {
+    return this.root;
   }
 }
