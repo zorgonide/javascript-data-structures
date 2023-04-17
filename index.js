@@ -269,31 +269,26 @@ class BST {
   height(node = this.root) {
     if (!node) {
       return -1;
-    } else {
-      let leftHeight = this.height(node.left);
-      let rightHeight = this.height(node.right);
-      return Math.max(leftHeight, rightHeight) + 1;
     }
+    return Math.max(this.height(node.left), this.height(node.right)) + 1;
   }
   add(val) {
-    let node = new TreeNode(val);
     if (!this.root) {
-      this.root = node;
+      this.root = new TreeNode(val);
     } else {
       let current = this.root;
       while (1) {
         if (val < current.value) {
-          if (current.left) {
-            current = current.left;
-          } else {
-            current.left = node;
+          if (current.left) current = current.left;
+          else {
+            current.left = new TreeNode(val);
             break;
           }
-        } else {
-          if (current.right) {
-            current = current.right;
-          } else {
-            current.right = node;
+        }
+        if (val > current.value) {
+          if (current.right) current = current.right;
+          else {
+            current.right = new TreeNode(val);
             break;
           }
         }
@@ -304,8 +299,17 @@ class BST {
   toObject() {
     return this.root;
   }
+  printBST(node, prefix = '', isLeft = true) {
+    if (node !== null) {
+      console.log(prefix + (isLeft ? '├──' : '└──') + node.value);
+      const indent = prefix + (isLeft ? '│  ' : '   ');
+      this.printBST(node.left, indent, true);
+      this.printBST(node.right, indent, false);
+    }
+  }
 }
 
 let tree = new BST();
 tree.add(5).add(3).add(7).add(1).add(9);
 console.log(tree.height()); // Output: 2
+console.log(tree.printBST(tree.toObject()));
