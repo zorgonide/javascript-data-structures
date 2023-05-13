@@ -121,42 +121,97 @@ class LinkedList {
   }
   push(val) {
     let node = new Node(val);
-    let current = this.head;
-    if (!current) {
+    if (!this.head) {
       this.head = node;
       this.tail = node;
       this.length++;
       return node;
+    } else {
+      let current = this.head;
+      while (current.next) {
+        current = current.next;
+      }
+      current.next = node;
+      this.tail = node;
+      this.length++;
+      return node;
     }
-    while (current.next) {
-      current = current.next;
-    }
-    current.next = node;
-    this.tail = node;
-    this.length++;
-    return node;
   }
   #find(index) {
     if (index < 0 || index > this.length) {
       return undefined;
     }
-    let current = this.head;
     let i = 0;
+    let current = this.head;
     while (i++ < index) {
       current = current.next;
     }
     return current;
   }
-  get(index) {
-    return this.#find(index)?.value || undefined;
-  }
   #findValue(value) {
+    if (!this.head) {
+      return undefined;
+    }
+    let i = 0;
     let current = this.head;
-    while (current && current.value !== value) current = current.next;
+    while (i++ < this.length && current.value != value) {
+      current = current.next;
+    }
     return current;
   }
-  getValue(value) {
-    return this.#findValue(value) || undefined;
+  getValue(val) {
+    return this.#findValue(val)?.value || 'not found';
+  }
+  get(index) {
+    return this.#find(index)?.value || 'not found';
+  }
+  delete(index) {
+    let nodeToBeDeleted = this.#find(index);
+    if (!nodeToBeDeleted) {
+      console.log('index out of bounds');
+      return undefined;
+    }
+    if (index === 0) {
+      this.head = this.head.next;
+    } else {
+      let i = 0;
+      let current = this.head;
+      while (i++ < index - 1) {
+        current = current.next;
+      }
+      current.next = current.next?.next || null;
+      if (this.length === index + 1) {
+        this.tail = current;
+      }
+    }
+    this.length--;
+    if (this.length === 0) this.tail = null;
+    return nodeToBeDeleted;
+  }
+  pop() {
+    return this.delete(this.length - 1);
+  }
+  deleteValue(value) {
+    let nodeToBeDeleted = this.#findValue(value);
+    if (!nodeToBeDeleted) {
+      console.log('value not found');
+      return undefined;
+    }
+    if (this.head === nodeToBeDeleted) {
+      this.head = this.head.next;
+    } else {
+      let current = this.head;
+      while (current.next !== nodeToBeDeleted) {
+        current = current.next;
+      }
+      current.next = current.next?.next || null;
+      if (!current.next) {
+        this.tail = current;
+      }
+    }
+    this.length--;
+    if (this.length === 0) this.tail = null;
+    return nodeToBeDeleted;
   }
   printLinkedList() {
     let current = this.head;
@@ -168,58 +223,8 @@ class LinkedList {
     listString += 'null';
     console.log(listString);
   }
-  pop() {
-    return this.delete(this.length - 1)?.value;
-  }
-  deleteValue(value) {
-    if (!this.#findValue(value)) {
-      console.log('Not found');
-      return null;
-    }
-    let nodeToBeDeleted = this.#findValue(value);
-    let current = this.head;
-    if (current.value === value) {
-      this.head = current.next;
-      if (!this.head) this.tail = null;
-      this.length--;
-
-      return;
-    }
-    while (current.next.value !== nodeToBeDeleted.value) {
-      current = current.next;
-    }
-    if (!current.next.next) {
-      this.tail = current;
-    }
-    current.next = current.next.next;
-    if (this.length <= 0) {
-      this.head = null;
-      this.tail = null;
-    }
-    this.length--;
-  }
-  delete(index) {
-    if (index < 0 || index > this.length) {
-      return undefined;
-    }
-    let nodeToBeDeleted;
-    if (index === 0) {
-      nodeToBeDeleted = this.head;
-      this.head = this.head.next;
-    } else {
-      let i = 0,
-        current = this.head;
-      while (i++ < index - 1) current = current.next;
-      nodeToBeDeleted = current.next;
-      if (!current.next.next) this.tail = current;
-      current.next = current.next.next;
-    }
-    this.length--;
-    if (this.length === 0) this.tail = null;
-    return nodeToBeDeleted;
-  }
 }
-
+console.log('-----Linked List Start-----');
 let ll = new LinkedList();
 ll.push(1);
 ll.push(2);
@@ -228,7 +233,9 @@ ll.push(4);
 
 ll.printLinkedList();
 
-console.log(ll.getValue(1));
+// console.log(ll.getValue(3));
+// console.log(ll.get(-2));
+
 ll.pop();
 ll.printLinkedList();
 ll.pop();
@@ -243,14 +250,15 @@ ll.push(3);
 ll.push(2);
 ll.push(1);
 ll.printLinkedList();
-ll.pop();
-ll.pop();
-ll.pop();
-ll.delete(0);
-ll.printLinkedList();
+// ll.pop();
+// ll.pop();
+// ll.pop();
+// ll.deleteValue(4);
+// ll.printLinkedList();
 console.log('Head', ll.head);
 console.log('Length', ll.length);
 console.log('Tail', ll.tail);
+console.log('-----Linked List End-------');
 
 // BST
 
