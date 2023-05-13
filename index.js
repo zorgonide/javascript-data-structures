@@ -316,11 +316,13 @@ class BST {
     }
   }
 }
+console.log('-----BST Start-------');
 
 let tree = new BST();
 tree.add(5).add(3).add(7).add(1).add(9);
 console.log(tree.height()); // Output: 2
 console.log(tree.printBST(tree.toObject()));
+console.log('-----BST End-------');
 
 //AVL TREE
 
