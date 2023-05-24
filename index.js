@@ -624,7 +624,7 @@ function findShortestPathLength(maze, [xA, yA], [xB, yB]) {
 
   return -1;
 }
-
+// the coordinates are in (x,y) format but they translate into [y][x]. think of it in that way
 function getNeighbours(visited, x, y) {
   const neighbours = [];
   if (x - 1 >= 0 && !visited[y][x - 1].closed) {
