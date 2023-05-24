@@ -466,6 +466,18 @@ class TrieNode {
   }
 }
 
+function printTrie(node, indent = '') {
+  if (node.value !== '') {
+    console.log(indent + node.value);
+    indent += '->';
+  }
+
+  for (let i = 0; i < node.children.length; i++) {
+    const child = node.children[i];
+    printTrie(child, indent);
+  }
+}
+
 const createTrie = (words) => {
   let root = new TrieNode('');
   for (let word of words) {
@@ -492,6 +504,6 @@ const CITY_NAMES = [
 ];
 const root = createTrie(CITY_NAMES.slice(0, 10));
 
-console.log(root);
-console.log(root.complete('san'));
+// console.log(printTrie(root));
+console.log(root.complete('ph'));
 console.log('--------------Tries end----------------');
