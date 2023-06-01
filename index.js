@@ -1,7 +1,6 @@
 import './hashing.js';
 import './sorting.js';
 
-
 console.log('--------------Bloom filters begin----------------');
 const XXH = require('xxhashjs');
 const h1 = (string) =>
@@ -30,7 +29,7 @@ class BloomFilter {
     );
   }
 }
-bf = new BloomFilter();
+let bf = new BloomFilter();
 // console.log(bf.contains('Brian'));
 const names = [
   'Brian',
@@ -49,4 +48,3 @@ names.forEach((item) => bf.add(item));
 );
 
 console.log('--------------Bloom filters end----------------');
-
