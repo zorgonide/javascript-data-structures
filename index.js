@@ -1,5 +1,5 @@
 import './hashing.js';
-import './stack.js';
+import './queue.js';
 
 console.log('--------------Bloom filters begin----------------');
 const XXH = require('xxhashjs');
