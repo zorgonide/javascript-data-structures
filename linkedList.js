@@ -15,7 +15,7 @@ class LinkedList {
   }
   push(value) {
     let node = new Node(value);
-    if (!this.length) {
+    if (!this.head) {
       this.head = node;
       this.tail = node;
     } else {
@@ -23,7 +23,6 @@ class LinkedList {
       this.tail = this.tail.next;
     }
     this.length++;
-    return;
   }
   #find(index) {
     if (index >= 0 && index < this.length) {
@@ -36,61 +35,60 @@ class LinkedList {
     } else return undefined;
   }
   get(index) {
-    return this.#find(index)?.value || 'Index out of bounds';
+    return this.#find(index)?.value || 'out of bounds';
   }
   #findValue(value) {
+    if (!this.head) return undefined;
     let current = this.head;
-    let i = 0;
-    while (i++ < this.length && current.value !== value) {
+    while (current?.value !== value && current) {
       current = current.next;
     }
     return current;
   }
   getValue(value) {
-    return this.#findValue(value)?.value || 'Not found';
+    return this.#findValue(value) || 'not found';
   }
   deleteValue(value) {
-    let nodeToBeDeleted = this.#findValue(value);
-    if (!nodeToBeDeleted) {
-      return 'value not found';
-    }
-    if (this.head === nodeToBeDeleted) {
-      this.head = this.head.next;
-    } else {
-      let current = this.head;
-      while (current.next !== nodeToBeDeleted) {
-        current = current.next;
-      }
-      current.next = current.next?.next || null;
-      if (!current.next) {
-        this.tail = current;
-      }
-    }
-    this.length--;
-    if (this.length === 0) this.tail = null;
-    return nodeToBeDeleted;
-  }
-  pop() {
-    return this.delete(this.length - 1) || 'Linked List empty';
-  }
-  delete(index) {
-    if (index >= 0 && index < this.length) {
-      let nodeDeleted;
-      if (index === 0) {
-        nodeDeleted = this.head;
+    let valueToDelete = this.#findValue(value);
+    if (valueToDelete) {
+      if (valueToDelete === this.head) {
         this.head = this.head.next;
       } else {
-        let prevNode = this.#find(index - 1);
-        nodeDeleted = prevNode.next;
-        prevNode.next = prevNode.next?.next || null;
-        if (this.length - 1 === index) {
-          this.tail = prevNode;
+        let current = this.head;
+        while (current.next !== valueToDelete) {
+          current = current.next;
         }
+        current.next = valueToDelete.next;
+        if (!valueToDelete.next) this.tail = current;
       }
       this.length--;
-      if (this.length === 0) this.tail = null;
-      return nodeDeleted;
-    } else return undefined;
+      if (this.length === 0) {
+        this.head = null;
+        this.tail = null;
+      }
+    }
+    return valueToDelete;
+  }
+  pop() {
+    return this.delete(this.length - 1) || 'll empty';
+  }
+  delete(index) {
+    let valueToDelete = this.#find(index);
+    if (valueToDelete) {
+      if (valueToDelete === this.head) {
+        this.head = this.head.next;
+      } else {
+        let prev = this.#find(index - 1);
+        prev.next = valueToDelete.next;
+        if (!valueToDelete.next) this.tail = prev;
+      }
+      this.length--;
+      if (this.length === 0) {
+        this.head = null;
+        this.tail = null;
+      }
+    }
+    return valueToDelete;
   }
 }
 
@@ -170,7 +168,7 @@ class LinkedListFinal {
     return nodeToBeDeleted;
   }
   pop() {
-    return this.delete(this.length - 1);
+    return this.delete(this.length - 1) || 'll empty';
   }
   deleteValue(value) {
     let nodeToBeDeleted = this.#findValue(value);
@@ -220,13 +218,16 @@ printLinkedList(linkedList);
 // Test the get method
 console.log('Search');
 
-console.log(linkedList.get(0)); // Should display: 10
-console.log(linkedList.get(1)); // Should display: 20
-console.log(linkedList.get(2)); // Should display: 30
-console.log(linkedList.get(3)); // Should display: "index out of bounds"
+console.log('// Should display: 10 =>' + linkedList.get(0));
+console.log('// Should display: 20 =>' + linkedList.get(1)); // Should display: 20
+console.log('// Should display: 20 =>' + linkedList.get(2)); // Should display: 30
+console.log('// Should display: out of bounds =>' + linkedList.get(3)); // Should display: "index out of bounds"
 
 // console.log('getvalue ' + linkedList.getValue(20)); // Should display: Node { value: 20, next: Node { value: 30, next: null } }
-console.log(linkedList.getValue(40)); //not found
+console.log('// Should display: not found =>' + linkedList.getValue(40)); //not found
+console.log('// Should display: 10 =>' + linkedList.getValue(10).value); //10
+console.log('// Should display: 20 =>' + linkedList.getValue(20).value); //20
+console.log('// Should display: 30 =>' + linkedList.getValue(30).value); //30
 
 console.log('DELETE');
 printLinkedList(linkedList);
@@ -235,6 +236,7 @@ printLinkedList(linkedList);
 
 console.log(linkedList.deleteValue(40)); // Should display: 'Not found'
 printLinkedList(linkedList);
+console.log('Tail at 30', linkedList.tail);
 
 console.log(linkedList.deleteValue(10)); // Should display: Node { value: 30, next: null }
 printLinkedList(linkedList);
@@ -243,10 +245,16 @@ printLinkedList(linkedList);
 // printLinkedList(linkedList);
 console.log('POP');
 
-console.log(linkedList.pop()); // Should display: Node { value: 30, next: null }
-console.log(linkedList.pop()); // Should display: Node { value: 20, next: null }
-console.log(linkedList.pop()); // Should display: Node { value: 10, next: null }
-console.log(linkedList.pop()); // Should display: 'Linked List empty'
+console.log(
+  'Should display: Node { value: 30, next: null } => ' + linkedList.pop().value
+); //
+console.log(
+  'Should display: Node { value: 20, next: null } =>' + linkedList.pop().value
+); //
+console.log(
+  'Should display: Node { value: 10, next: null } =>' + linkedList.pop().value
+); //
+console.log("Should display: 'Linked List empty' =>" + linkedList.pop()); //
 
 // Test the delete method
 console.log('Push');
@@ -258,11 +266,13 @@ printLinkedList(linkedList);
 console.log(linkedList); // Should display: LinkedList { head: Node { value: 100, next: Node { value: 200, next: Node { value: 300, next: null } } }, tail: Node { value: 300, next: null }, length: 3 }
 console.log('DELETE');
 
+console.log(linkedList.delete(2)); // Should display: Node { value: 300, next: null }
+console.log('Tail at 200', linkedList.tail);
+
 console.log(linkedList.delete(1)); // Should display: Node { value: 200, next: Node { value: 300, next: null } }
 console.log(linkedList.delete(0)); // Should display: Node { value: 100, next: Node { value: 300, next: null } }
 printLinkedList(linkedList);
 console.log(linkedList.delete(1)); // Should display:  undefined}
-console.log(linkedList.delete(0)); // Should display: Node { value: 300, next: null }
 console.log(linkedList.delete(2)); // Should display: undefined
 
 console.log('Head', linkedList.head);
