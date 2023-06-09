@@ -21,28 +21,7 @@ class Stack {
   }
 }
 
-class Stack1 {
-  constructor() {
-    this.storage = {};
-    this.length = 0;
-  }
-  push(val) {
-    this.storage[this.length++] = val;
-  }
-  pop() {
-    if (this.length > 0) {
-      let val = this.storage[this.length - 1];
-      delete this.storage[this.length - 1];
-      this.length--;
-      return val;
-    } else return undefined;
-  }
-  peek() {
-    return this.storage[this.length - 1];
-  }
-}
-
-let s = new Stack1();
+let s = new Stack();
 s.push(1);
 s.push(2);
 s.push(3);
