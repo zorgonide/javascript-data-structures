@@ -1,5 +1,6 @@
 let nums = [10, 9, 8, 4, 7, 2, 27, 1, 3];
 console.log('Before', nums);
+
 const bubbleSort = () => {
   for (let i = 0; i < nums.length; i++) {
     let swap = false;
@@ -13,7 +14,8 @@ const bubbleSort = () => {
   }
   return nums;
 };
-// bubbleSort()
+// bubbleSort();
+
 const insertionSort = () => {
   for (let i = 1; i < nums.length; i++) {
     let num = nums[i];
@@ -89,6 +91,29 @@ function radixSort(array) {
   return array;
 }
 
+function getDigit1(num, place, largest) {
+  num = num.toString();
+  let displace = largest - num.length;
+  return num[place - displace] || 0;
+}
+
+function radixSort1(array) {
+  let longest = getLongest(array);
+  let buckets = new Array(10).fill().map(() => []);
+  for (let i = longest - 1; i >= 0; i--) {
+    while (array.length) {
+      let current = array.shift();
+      buckets[getDigit1(current, i, longest)].push(current);
+    }
+    for (let j = 0; j < 10; j++) {
+      while (buckets[j].length) {
+        array.push(buckets[j].shift());
+      }
+    }
+  }
+  return array;
+}
+
 const binarySearch = (nums, searchTerm) => {
   let min = 0,
     max = nums.length - 1;
@@ -101,5 +126,5 @@ const binarySearch = (nums, searchTerm) => {
   }
   return undefined;
 };
-// console.log('After', radixSort(nums));
-// console.log('After Search', binarySearch(radixSort(nums), 20));
+console.log('After', radixSort(nums));
+console.log('After Search', binarySearch(radixSort(nums), 4));

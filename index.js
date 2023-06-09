@@ -1,5 +1,5 @@
 import './hashing.js';
-import './sorting.js';
+import './stack.js';
 
 console.log('--------------Bloom filters begin----------------');
 const XXH = require('xxhashjs');
