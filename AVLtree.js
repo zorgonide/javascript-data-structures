@@ -97,3 +97,11 @@ class AVLNode {
 }
 
 console.log('----------AVL END-------------');
+
+/**
+ * If the node has no left child and no right child (i.e., it is a leaf node), then its height is set to 1. This is because a leaf node is considered to have a height of 1.
+
+If the node has no right child or its left child's height is greater than its right child's height, then its height is set to the height of its left child plus 1. This is because the node's height is determined by the height of its left subtree.
+
+If the node has no left child or its right child's height is greater than its left child's height, then its height is set to the height of its right child plus 1. This is because the node's height is determined by the height of its right subtree.
+ */
