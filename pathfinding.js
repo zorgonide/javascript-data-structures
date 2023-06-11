@@ -19,7 +19,7 @@ function findShortestPathLength(maze, [xA, yA], [xB, yB]) {
   let visited = generateVisited(maze);
   visited[yA][xA].opened_by = BY_A;
   visited[yB][xB].opened_by = BY_B;
-
+  // coordinates provided in the form [x,y] will be accessed as [y][x]
   let aQueue = [visited[yA][xA]];
   let bQueue = [visited[yB][xB]];
   let iteration = 0;
@@ -120,6 +120,6 @@ const sixBySix = [
   [0, 0, 2, 0, 0, 0],
 ];
 console.log(findShortestPathLength(sixBySix, [1, 1], [2, 5]) == 7);
-console.log(findShortestPathLength(eightByEight, [1, 7], [7, 7]) == 16);
+console.log(findShortestPathLength(eightByEight, [1, 6], [7, 7]) == 15);
 console.log(findShortestPathLength(fifteenByFifteen, [1, 1], [8, 8]) == 78);
 console.log('----------------pathfinding end------------');
