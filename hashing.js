@@ -1,6 +1,6 @@
 // hashtable
 const XXH = require('xxhashjs');
-console.log('-----hash table start-------');
+console.log('-----hash table start------');
 
 class Hashtable {
   constructor(size) {

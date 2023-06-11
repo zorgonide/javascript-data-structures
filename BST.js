@@ -53,6 +53,31 @@ class BST {
     }
   }
 }
+
+const preOrderTraversal = (node, array) => {
+  if (!node) {
+    return array;
+  }
+  array.push(node.value);
+  array = preOrderTraversal(node.left, array);
+  array = preOrderTraversal(node.right, array);
+  return array;
+};
+const inOrderTraversal = (node, array) => {
+  if (!node) return array;
+  array = inOrderTraversal(node.left, array);
+  array.push(node.value);
+  array = inOrderTraversal(node.right, array);
+  return array;
+};
+
+const postOrderTraversal = (node, array) => {
+  if (!node) return array;
+  array = postOrderTraversal(node.left, array);
+  array = postOrderTraversal(node.right, array);
+  array.push(node.value);
+  return array;
+};
 console.log('-----BST Start-------');
 let tree = new BST();
 tree.add(50);
@@ -84,6 +109,22 @@ console.log('Updated height of the BST:', tree.height()); // Should print: 3
 
 // Test the toObject method again
 console.log('Updated BST as an object:', tree.toObject()); // Should print: { value: 50, left: TreeNode, right: TreeNode }
+console.log(
+  JSON.stringify(preOrderTraversal(tree.root, [])) ==
+    '[50,30,20,40,70,60,55,80,75]'
+);
+// Preorder traversal: 50, 30, 20, 40, 70, 60, 55, 80, 75
+console.log(
+  JSON.stringify(postOrderTraversal(tree.root, [])) ==
+    '[20,40,30,55,60,75,80,70,50]'
+);
+// Postorder traversal: [20,40,30,55,60,75,80,70,50]
+console.log(
+  JSON.stringify(inOrderTraversal(tree.root, [])) ==
+    '[20,30,40,50,55,60,70,75,80]'
+);
+// Inorder traversal: [20,30,40,50,55,60,70,75,80]
+
 console.log('-----BST End-------');
 
 /**
