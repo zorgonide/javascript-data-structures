@@ -4,29 +4,46 @@ console.log('-----hash table start------');
 
 class Hashtable {
   constructor(size) {
-    this._storage = [];
+    this._storage = new Array(size);
     this._tableSize = size;
+    this.elements = 0;
   }
-  insert(key, value) {
-    const index = this.h1(key);
-    if (!this._storage[index]) {
-      this._storage[index] = [];
+  insert(key, val) {
+    let index = this.hashingAlgorithm(key);
+    if (!this._storage[index]) this._storage[index] = [];
+    this._storage[index].push([key, val]);
+    this.elements++;
+    this.adjust();
+  }
+  adjust() {
+    if (this.elements > Math.floor(this._tableSize / 2)) {
+      let newarray = new Array(this._tableSize * 2);
+      this._tableSize = this._tableSize * 2;
+      this._storage.forEach((e) => {
+        if (Array.isArray(e)) {
+          e.forEach((element) => {
+            let index = this.hashingAlgorithm(element[0]);
+            if (!newarray[index]) newarray[index] = [];
+            newarray[index].push([element[0], element[1]]);
+          });
+        }
+      });
+      this._storage = newarray;
     }
-    this._storage[index].push([key, value]);
   }
   retrieve(key) {
-    const index = this.h1(key);
+    let index = this.hashingAlgorithm(key);
     if (this._storage[index])
       return this._storage[index].find((e) => e[0] === key);
     else return undefined;
   }
-  h1(string) {
+  hashingAlgorithm(string) {
     return Math.abs(
       XXH.h32(0xabcd).update(string).digest().toNumber() % this._tableSize
     );
   }
 }
-h = new Hashtable(25);
+h = new Hashtable(5);
 h.insert('a', 1);
 h.insert('b', 2);
 h.insert('c', 3);
