@@ -53,7 +53,7 @@ class BST {
     }
   }
 }
-
+// gives deep copy of treee
 const preOrderTraversal = (node, array) => {
   if (!node) {
     return array;
@@ -63,6 +63,8 @@ const preOrderTraversal = (node, array) => {
   array = preOrderTraversal(node.right, array);
   return array;
 };
+
+// gives sorted array
 const inOrderTraversal = (node, array) => {
   if (!node) return array;
   array = inOrderTraversal(node.left, array);
@@ -71,6 +73,7 @@ const inOrderTraversal = (node, array) => {
   return array;
 };
 
+// useful for deletion of node
 const postOrderTraversal = (node, array) => {
   if (!node) return array;
   array = postOrderTraversal(node.left, array);
@@ -79,6 +82,7 @@ const postOrderTraversal = (node, array) => {
   return array;
 };
 
+//useful for pathfinding graphs etc
 const BreadthFirstTraversal = (queue, array) => {
   while (queue.length) {
     let node = queue.shift();
