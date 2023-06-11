@@ -78,6 +78,16 @@ const postOrderTraversal = (node, array) => {
   array.push(node.value);
   return array;
 };
+
+const BreadthFirstTraversal = (queue, array) => {
+  while (queue.length) {
+    let node = queue.shift();
+    array.push(node.value);
+    if (node.left) queue.push(node.left);
+    if (node.right) queue.push(node.right);
+  }
+  return array;
+};
 console.log('-----BST Start-------');
 let tree = new BST();
 tree.add(50);
@@ -124,6 +134,11 @@ console.log(
     '[20,30,40,50,55,60,70,75,80]'
 );
 // Inorder traversal: [20,30,40,50,55,60,70,75,80]
+console.log(
+  JSON.stringify(BreadthFirstTraversal([tree.root], [])) ==
+    '[50,30,70,20,40,60,80,55,75]'
+);
+// Breadth first traversal: [50, 30, 70, 20, 40, 60, 80, 55, 75]
 
 console.log('-----BST End-------');
 
