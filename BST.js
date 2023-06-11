@@ -85,3 +85,18 @@ console.log('Updated height of the BST:', tree.height()); // Should print: 3
 // Test the toObject method again
 console.log('Updated BST as an object:', tree.toObject()); // Should print: { value: 50, left: TreeNode, right: TreeNode }
 console.log('-----BST End-------');
+
+/**
+ * Here's how height code works:
+
+It takes in a node as an argument, which represents the root of the subtree for which we want to calculate the height.
+
+If the node is null or undefined (i.e., if there is no subtree), then the function returns -1, which represents the height of an empty tree.
+
+If the node is not null, then the function recursively calculates the height of the left and right subtrees by calling itself with the left and right child nodes of the current node, respectively.
+
+The height of a subtree is defined as the maximum height of its left and right subtrees, plus one (to account for the current node). This is what the code is doing with the Math.max() and +1 operations.
+
+Finally, the function returns the computed height of the entire subtree rooted at the given node.
+ * 
+ */
