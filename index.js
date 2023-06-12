@@ -5,6 +5,6 @@ import './hashing.js';
 // import './linkedList.js';
 // import './BST.js';
 // import './AVLtree.js';
-import './pathfinding.js';
-// import './tries.js';
+// import './pathfinding.js';
+import './tries.js';
 // import './bloomFilters.js';

@@ -1,5 +1,4 @@
 console.log('----------TRIES BEGIN-------------');
-
 class TrieNode {
   constructor(string) {
     this.terminus = false;
@@ -23,6 +22,7 @@ class TrieNode {
   }
   #complete(search, built, suggestions) {
     if (suggestions.length >= 3 || (search && search[0] !== this.value)) {
+      //ensures search is defined before checking search[0]
       return suggestions;
     }
     if (this.terminus) {
@@ -54,13 +54,14 @@ function printTrie(node, indent = '') {
   }
 }
 
-const createTrie = (words) => {
+function createTrie(words) {
   let root = new TrieNode('');
   for (let word of words) {
     root.add(word.toLowerCase());
   }
   return root;
-};
+}
+
 const CITY_NAMES = [
   'New York',
   'Los Angeles',
@@ -78,8 +79,8 @@ const CITY_NAMES = [
   'San Francisco',
   'Columbus',
 ];
-const root = createTrie(CITY_NAMES.slice(0, 10));
+const root = createTrie(CITY_NAMES);
 
-// console.log(printTrie(root));
+console.log(printTrie(root));
 console.log(root.complete('ph'));
 console.log('--------------Tries end----------------');
