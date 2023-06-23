@@ -28,7 +28,8 @@ const insertionSort = () => {
     nums[j + 1] = num;
   }
 };
-// insertionSort()
+
+// insertionSort();
 const mergeSort = (nums) => {
   if (nums.length <= 1) return nums;
   let length = Math.floor(nums.length / 2);
@@ -51,6 +52,10 @@ const quickSort = (nums) => {
   if (nums.length < 2) {
     return nums;
   }
+  // better to take a pivot from the middle of the array to avoid worst case => which
+  //  occurs if the list is nearly sorted or sorted and pivot is picked as first or last
+  //  element, in which case the complexity become n^2 because it gives you n groups that
+  // each need to be iterated through n times, hence the O(n^2) complexity.
   let pivot = nums.pop();
   let l = [];
   let r = [];
@@ -126,5 +131,5 @@ const binarySearch = (nums, searchTerm) => {
   }
   return undefined;
 };
-console.log('After', radixSort(nums));
+console.log('After', quickSort(nums));
 console.log('After Search', binarySearch(radixSort(nums), 4));
