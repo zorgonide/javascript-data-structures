@@ -105,7 +105,7 @@ const binarySearch = (nums, searchTerm) => {
     } else if (searchTerm > nums[middle]) min = middle + 1;
     else return nums[middle];
   }
-  return undefined;
+  return -1;
 };
 console.log('After', quickSort(nums));
 console.log('After Search', binarySearch(radixSort(nums), 43));

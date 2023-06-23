@@ -1,4 +1,4 @@
-import './hashing.js';
+// import './hashing.js';
 import './sorting.js';
 // import './stack.js';
 // import './queue.js';
