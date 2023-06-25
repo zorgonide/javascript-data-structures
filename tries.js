@@ -15,7 +15,7 @@ class TrieNode {
       if (child.value === value) {
         if (next) child.add(next);
         else child.terminus = true; // terminate child not parent
-        return; // return if there is a match
+        return; // return if there is a match, break gives error
       }
     }
     this.children.push(new TrieNode(string));
@@ -57,7 +57,7 @@ function printTrie(node, indent = '') {
 function createTrie(words) {
   let root = new TrieNode('');
   for (let word of words) {
-    root.add(word.toLowerCase());
+    root.add(word.toLowerCase()); // toLowerCase super important
   }
   return root;
 }
@@ -82,5 +82,5 @@ const CITY_NAMES = [
 const root = createTrie(CITY_NAMES);
 
 console.log(printTrie(root));
-console.log(root.complete('ph'));
+console.log(root.complete('p'));
 console.log('--------------Tries end----------------');
