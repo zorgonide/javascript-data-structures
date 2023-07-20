@@ -7,6 +7,99 @@ class Node {
   }
 }
 
+class LL {
+  constructor() {
+    this.head = null;
+    this.tail = null;
+    this.length = 0;
+  }
+  push(value) {
+    let node = new Node(value);
+    if (!this.length) {
+      this.head = node;
+      this.tail = node;
+      this.length++;
+    } else {
+      this.tail.next = node;
+      this.tail = this.tail.next;
+      this.length++;
+    }
+  }
+  #find(index) {
+    if (index >= 0 && index < this.length) {
+      let i = 0;
+      let current = this.head;
+      while (i++ < index) {
+        current = current.next;
+      }
+      return current;
+    } else return undefined;
+  }
+  get(index) {
+    return this.#find(index)?.value || 'out of bounds!';
+  }
+  #findValue(value) {
+    if (this.head) {
+      let current = this.head;
+      let i = 0;
+      while (current?.value !== value && i++ < this.length) {
+        current = current.next;
+      }
+      return current;
+    }
+    return undefined;
+  }
+  getValue(value) {
+    return this.#findValue(value) || 'not foundd';
+  }
+  deleteValue(value) {
+    let nodeDelete = this.#findValue(value);
+    if (nodeDelete) {
+      if (this.head === nodeDelete) {
+        this.head = this.head.next;
+      } else {
+        let current = this.head;
+        while (current.next !== nodeDelete) {
+          current = current.next;
+        }
+        current.next = nodeDelete.next;
+        if (!nodeDelete.next) this.tail = current;
+      }
+      this.length--;
+      if (!this.length) {
+        this.head = null;
+        this.tail = null;
+      }
+      return nodeDelete;
+    }
+    return undefined;
+  }
+  delete(index) {
+    let nodeDelete = this.#find(index);
+    if (nodeDelete) {
+      if (this.head === nodeDelete) {
+        this.head = this.head.next;
+      } else {
+        let current = this.head;
+        while (current.next !== nodeDelete) {
+          current = current.next;
+        }
+        current.next = nodeDelete.next;
+        if (!nodeDelete.next) this.tail = current;
+      }
+      this.length--;
+      if (!this.length) {
+        this.head = null;
+        this.tail = null;
+      }
+      return nodeDelete;
+    } else return 'out of bounds';
+  }
+  pop() {
+    return this.delete(this.length - 1);
+  }
+}
+
 class LinkedList {
   constructor() {
     this.head = null;
@@ -159,7 +252,7 @@ class LinkedListFinal {
     return nodeToBeDeleted;
   }
   pop() {
-    return this.delete(this.length - 1) || "empty";
+    return this.delete(this.length - 1) || 'empty';
   }
   deleteValue(value) {
     let nodeToBeDeleted = this.#findValue(value);
@@ -197,7 +290,7 @@ function printLinkedList(ll) {
   console.log(listString);
 }
 
-const linkedList = new LinkedListFinal();
+const linkedList = new LL();
 
 // Test the push method
 console.log('PUSH');
@@ -224,20 +317,27 @@ console.log('// Should display: 30 =>' + linkedList.getValue(30).value); //30
 
 console.log('DELETE');
 printLinkedList(linkedList);
-console.log(linkedList.deleteValue(20)); // Should display: Node { value: 20, next: Node { value: 30, next: null } }
+console.log(
+  'Should display: Node { value: 20, next: Node { value: 30, next: null } }',
+  linkedList.deleteValue(20)
+); //
 printLinkedList(linkedList);
 
-console.log(linkedList.deleteValue(40)); // Should display: 'Not found'
+console.log("Should display: 'Not found'", linkedList.deleteValue(40)); //
 printLinkedList(linkedList);
 console.log('Tail at 30', linkedList.tail);
 
-console.log(linkedList.deleteValue(10)); // Should display: Node { value: 30, next: null }
+console.log(
+  'Should display: Node { value: 10, next: 30 }',
+  linkedList.deleteValue(10)
+);
 printLinkedList(linkedList);
 
 // console.log(linkedList.deleteValue(10));
 // printLinkedList(linkedList);
 console.log('POP');
-
+console.log('LL before pop');
+printLinkedList(linkedList);
 console.log(
   'Should display: Node { value: 30, next: null } => ' + linkedList.pop().value
 ); //
