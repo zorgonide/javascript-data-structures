@@ -48,6 +48,7 @@ const merge = (l, r) => {
   }
   return [...results, ...l, ...r];
 };
+
 const quickSort = (nums) => {
   if (nums.length < 2) {
     return nums;
@@ -74,12 +75,12 @@ const getDigit = (num, place, longest) => {
   let displace = longest - size;
   return num[place - displace] || 0;
 };
+// consider example of 4 and 1000 in array. how would you get nums[3] from that array in such a way you get 4 and 0 respectively
 const getLongest = (nums) => {
   return Math.max(...nums).toString().length;
 };
 
 function radixSort(array) {
-  // code goes here
   let longest = getLongest(array);
   let buckets = new Array(10).fill().map(() => []);
   for (let i = longest - 1; i >= 0; i--) {
@@ -107,5 +108,5 @@ const binarySearch = (nums, searchTerm) => {
   }
   return -1;
 };
-console.log('After', quickSort(nums));
+console.log('After', radixSort(nums));
 console.log('After Search', binarySearch(radixSort(nums), 43));

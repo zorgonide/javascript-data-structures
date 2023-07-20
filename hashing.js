@@ -4,42 +4,36 @@ console.log('-----hash table start------');
 
 class Hashtable {
   constructor(size) {
-    this._storage = new Array(size);
-    this._tableSize = size;
-    this.elements = 0;
+    this.size = size;
+    this.length = 0;
+    this._storage = new Array(size).fill().map(() => []);
   }
   insert(key, val) {
     let index = this.hashingAlgorithm(key);
-    if (!this._storage[index]) this._storage[index] = [];
-    this._storage[index].push([key, val]);
-    this.elements++;
-    this.adjust();
+    this._storage[index].push({ key, val });
+    this.length++;
+    if (this.length > this.size / 2) this.adjust();
   }
   adjust() {
-    if (this.elements > Math.floor(this._tableSize / 2)) {
-      let newarray = new Array(this._tableSize * 2);
-      this._tableSize = this._tableSize * 2;
-      this._storage.forEach((e) => {
-        if (Array.isArray(e)) {
-          e.forEach((element) => {
-            let index = this.hashingAlgorithm(element[0]);
-            if (!newarray[index]) newarray[index] = [];
-            newarray[index].push([element[0], element[1]]);
-          });
-        }
-      });
-      this._storage = newarray;
+    this.size *= 2;
+    let newStore = new Array(this.size).fill().map(() => []);
+    for (let c of this._storage) {
+      while (c.length) {
+        let { key, val } = c.pop();
+        let index = this.hashingAlgorithm(key);
+        newStore[index].push({ key, val });
+      }
     }
+    this._storage = newStore;
   }
   retrieve(key) {
     let index = this.hashingAlgorithm(key);
-    if (this._storage[index])
-      return this._storage[index].find((e) => e[0] === key);
-    else return undefined;
+    let element = this._storage[index].find((e) => e.key === key);
+    return element?.val || 'not found';
   }
   hashingAlgorithm(string) {
     return Math.abs(
-      XXH.h32(0xabcd).update(string).digest().toNumber() % this._tableSize
+      XXH.h32(0xabcd).update(string).digest().toNumber() % this.size
     );
   }
 }
@@ -53,5 +47,5 @@ h.insert('e', 7);
 h.insert('f', 8);
 h.insert('g', 9);
 console.log(h);
-console.log(h.retrieve('b'));
+console.log(h.retrieve('h'));
 console.log('-----hash table end-------');

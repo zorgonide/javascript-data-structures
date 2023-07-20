@@ -1,4 +1,4 @@
-// import './hashing.js';
+import './hashing.js';
 // import './sorting.js';
 // import './stack.js';
 // import './queue.js';
@@ -6,5 +6,5 @@
 // import './BST.js';
 // import './AVLtree.js';
 // import './pathfinding.js';
-import './tries.js';
+// import './tries.js';
 // import './bloomFilters.js';
