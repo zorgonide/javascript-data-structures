@@ -109,4 +109,4 @@ const binarySearch = (nums, searchTerm) => {
   return -1;
 };
 console.log('After', radixSort(nums));
-console.log('After Search', binarySearch(radixSort(nums), 43));
+console.log('After Search', binarySearch(radixSort(nums), 27));
