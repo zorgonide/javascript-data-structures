@@ -37,15 +37,63 @@ class Hashtable {
     );
   }
 }
-h = new Hashtable(5);
-h.insert('a', 1);
-h.insert('b', 2);
-h.insert('c', 3);
-h.insert('d', 4);
-h.insert('r', 4);
-h.insert('e', 7);
-h.insert('f', 8);
-h.insert('g', 9);
-console.log(h);
-console.log(h.retrieve('h'));
+
+// Test Suite
+console.log('Starting Hashtable Tests');
+
+// Test 1: Hashtable Initialization
+let hashtable = new Hashtable(4);
+console.log(
+  hashtable.size === 4,
+  'Hashtable should be initialized with size 4.'
+);
+console.log(
+  hashtable.length === 0,
+  'Hashtable should be initialized with length 0.'
+);
+
+// Test 2: Insert Functionality
+hashtable.insert('key1', 'value1');
+console.log(
+  hashtable.length === 1,
+  'Hashtable should contain one element after insertion.'
+);
+
+// Test 3: Retrieve Functionality
+let retrievedValue = hashtable.retrieve('key1');
+console.log(
+  retrievedValue === 'value1',
+  'Retrieve should return the correct value for a key.'
+);
+
+// Test 4: Retrieve Non-Existent Key
+retrievedValue = hashtable.retrieve('nonexistent');
+console.log(
+  retrievedValue === 'not found',
+  "Retrieve should return 'not found' for a key that does not exist."
+);
+
+// Test 5: Adjust Size and Rehash
+// Insert enough elements to trigger an adjust
+hashtable.insert('key2', 'value2');
+hashtable.insert('key3', 'value3');
+// This insertion should trigger the adjust
+hashtable.insert('key4', 'value4');
+console.log(
+  hashtable.size === 8,
+  'Hashtable size should double when length exceeds half of its size.'
+);
+console.log(
+  hashtable.length === 4,
+  'Hashtable should correctly reflect the number of elements after adjusting.'
+);
+
+// Test 6: Retrieve After Adjust
+retrievedValue = hashtable.retrieve('key3');
+console.log(
+  retrievedValue === 'value3',
+  'Retrieve should return the correct value for a key after the hashtable adjusts.'
+);
+
+console.log('Hashtable Tests Completed');
 console.log('-----hash table end-------');

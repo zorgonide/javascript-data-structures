@@ -1,5 +1,5 @@
-// import './hashing.js';
-import './sorting.js';
+import './hashing.js';
+// import './sorting.js';
 // import './stack.js';
 // import './queue.js';
 // import './linkedList.js';
