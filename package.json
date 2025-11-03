@@ -4,5 +4,11 @@
   "private": true,
   "dependencies": {
     "xxhashjs": "^0.2.2"
+  },
+  "scripts": {
+    "dev": "vite"
+  },
+  "devDependencies": {
+    "vite": "^7.1.12"
   }
 }
